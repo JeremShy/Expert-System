@@ -48,12 +48,55 @@ def check_for_error(line):
 				if (not (is_fact(line[i + 1]) or line[i + 1] == '(')):
 					raise ParseException("operand error 2 for !")
 
+def go_to_last_par(line):
+	i = 1
+	while (True):
+		if (line[0] == '('):
+			i += 1
+		if (line[0] == ')'):
+			i -= 1
+		if (i == 0):
+			return (line)
+		line = line[1:]
+
 
 def polonaise_me(line):
-	pass
+	print ("calling polonaise_me with line : " + line);
+
+	rez = ""
+	last_operand = "";
+	if (len(line) == 0):
+		raise ParseException("WTF")
+	while (True):
+		if (len(line) == 0 or line[0] == ')'):
+			print "returning : " + rez + last_operand
+			return (rez + last_operand);
+		elif (line[0] == '('):
+			rez += polonaise_me(line[1:])
+			print "line before : " + line
+			line = go_to_last_par(line[1:])
+			print "line after : " + line
+		elif (is_fact(line[0])):
+			rez = rez + line[0];
+		elif (line[0] == '+'):	# Prioritaire
+			last_operand = line[0] + last_operand;
+		else: 					# Non prioritaire
+			rez = rez + last_operand
+			last_operand = line[0];
+		line = line[1:];
 
 
-###			 	MAIN		#####
+
+
+# 1 + 1 * 2
+#
+# # 1 + (2 + 9) * (2 * (1 + 1)) + 3 * (4 * ( 5 + (5 + 0))
+# 1 + (2 + 9) * (2 * (1 + 1)) * (3 + 1) + 3 * (4 * ( 5 + (5 + 0))
+# 1rezrez2rez3**+
+# ###			 	MAIN		#####
+#
+# A | (B | C) + (D + (E | F)) + (G | H) | I + (J + (K | (L | M))
+
 
 if (len(sys.argv) != 2):
 	print "usage: " + sys.argv[0] + " <inputfile>"
@@ -79,5 +122,3 @@ for line in data:
 		continue
 	print "OK"
 	rez = polonaise_me(line);
-
-# 1 + (2 + 9) * (2 * (1 + 1)) + 3 * (4 * ( 5 + (5 + 0))
