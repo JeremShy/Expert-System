@@ -5,9 +5,18 @@ import re
 
 from parse_error import ParseException
 
+def is_b_operand(c):
+	if (c == "+" or c == "|" or c == "^"):
+		return (True);
+	return (False);
+
 def check_for_error(line):
 	if (line.count("(") != line.count(")")):
 		raise ParseException("parenthesis error")
+	for i, c in enumerate(line):
+		if (is_b_operand(c)):
+			if (i == 0 or i == len(line) - 1):
+				raise ParseException("operand error for " + c);
 
 
 if (len(sys.argv) != 2):
@@ -26,12 +35,12 @@ for line in data:
 	line = line.translate(None, string.whitespace)
 	line = re.sub(r"#.*", "", line)
 
-	print '[' + line + ']',
+	print '[' + line + ']'
 	if (len(line) == 0 or line[0] == '#'):
 		continue
 	try:
 	 	check_for_error(line)
 	except ParseException as e:
-		print "Error " + e.strerror
+		print "Error: " + e.strerror
 		continue
 	print "OK"
