@@ -110,7 +110,7 @@ def polonaise_me(line):
 			# print "line after : " + line
 		elif (is_fact(line[0])):
 			rez = rez + line[0];
-		elif (line[0] == '+'):	# Prioritaire
+		elif (line[0] == '+' or (line[0] == '|' && len(last_operand) != 0 && last_operand[0] == '^')):	# Prioritaire
 			last_operand = line[0] + last_operand;
 		else: 					# Non prioritaire
 			rez = rez + last_operand
@@ -119,7 +119,7 @@ def polonaise_me(line):
 
 def get_polonaise(line):
 	if (len(line) == 0):
-		print "Parse error"
+		print "Parse error : member missing"
 		sys.exit(1);
 	try:
 	 	check_for_error(line)
@@ -130,9 +130,6 @@ def get_polonaise(line):
 	rez = polonaise_me(line);
 	# print "rez : " + rez
 	return (rez);
-
-
-
 
 if (len(sys.argv) != 2):
 	print "usage: " + sys.argv[0] + " <inputfile>"
@@ -145,6 +142,9 @@ except IOError as e:
 data = f.readlines()
 
 rules = [];
+toSearch = "";
+
+initial_facts = False;
 
 for line in data:
 	line = line.translate(None, string.whitespace)
@@ -161,9 +161,34 @@ for line in data:
 		i = line.find("=>")
 		obj = Rule(Rule.IMPL, get_polonaise(line[:i]), get_polonaise(line[i+2:]))
 		rules.append(obj);
-	else:
-		print "Parse error : no second member on a rule"
+	elif (line[0] == "="):
+		initial_facts = True;
+		for c in line[1:]:
+			if (not is_fact(c)):
+				print "Error while defining initial facts"
+				sys.exit(1);
+			dico[c] = 1;
+	elif (line[0] == "?"):
+		for c in line[1:]:
+			if (not is_fact(c)):
+				print "Error while parsing queries"
+				sys.exit(1);
+			toSearch += c
+
+if (toSearch == ""):
+		print "Error: no queries defined"
+		sys.exit(1);
+
+if (initial_facts == False):
+		print "Error: No initial facts or = followed by a newline"
 		sys.exit(1);
 
 for obj in rules:
 	print obj;
+
+print "Queries : " + toSearch
+
+
+
+a|b&c|d^e
+abc&|de|^
