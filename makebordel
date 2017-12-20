@@ -4,35 +4,30 @@ A => B <=> !B => !A
 (A => B => C) => (A => C)
 
 Commutatif
-A | B <=> B | A
-A & B <=> B & A
+A + B <=> B + A
+A.B <=> B.A
 A ^ B <=> B ^ A
 
 Distributif:
-A & (B | C) <=> (A & B) | (A & C)
-A | (B & C) <=> (A | B) & (A | C)
+A.(B + C) <=> (A.B) + (A.C)
+A + (B.C) <=> (A + B).(A + C)
 
-A | 0 <=> A
-A & 1 <=> A
+A + 0 <=> A
+A.1 <=> A
 
-A & 0 <=> 0
-A | 1 <=> 1
+A.0 <=> 0
+A + 1 <=> 1
 
 Simplification:
-A | (!A & B) <=> A | B
-A & (!A | B) <=> A & B
+A + (!A.B) <=> A + B
+A.(!A + B) <=> A.B
 
-Double distributivite
-(A & B) | (!A & C) <=> (A & B) | (!A & C) | (B & C)
+Double distributivitée
+(A.B) + (!A.C) <=> (A.B) + (!A.C) + (B.C)
 
-A & !A = 1
-A | !A = 0
+A.!A = 1
+A + !A = 0
 
 
-!(A | B) <=> !A & !B
-!(A & B) <=> !A | !B
-
-A + B + C
-
-AB+C+
-AC|
+!(A + B) <=> !A.!B
+!(A.B) <=> !A + !B
