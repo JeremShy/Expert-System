@@ -7,5 +7,7 @@ class Rule:
 		self.right = right
 
 	def __str__(self):
-		if (op == EQU)
-			return (left + " <=> " + )
+		if (self.op == Rule.EQU):
+			return (self.left + " <=> " + self.right);
+		elif (self.op == Rule.IMPL):
+			return (self.left + " => " + self.right);

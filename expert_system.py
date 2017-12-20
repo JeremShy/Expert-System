@@ -5,8 +5,36 @@ import re
 
 from parse_error import ParseException
 from is_x import *
-
 from rule import *
+
+dico = {
+				'A' : 0,
+				'B' : 0,
+				'C' : 0,
+				'D' : 0,
+				'E' : 0,
+				'F' : 0,
+				'G' : 0,
+				'H' : 0,
+				'I' : 0,
+				'J' : 0,
+				'K' : 0,
+				'L' : 0,
+				'M' : 0,
+				'N' : 0,
+				'O' : 0,
+				'P' : 0,
+				'Q' : 0,
+				'R' : 0,
+				'S' : 0,
+				'T' : 0,
+				'U' : 0,
+				'V' : 0,
+				'W' : 0,
+				'X' : 0,
+				'Y' : 0,
+				'Z' : 0
+			}
 
 def check_parenthesis_error(line):
 	i = 0
@@ -98,10 +126,11 @@ def get_polonaise(line):
 	except ParseException as e:
 		print "Parse error: " + e.strerror
 		sys.exit(1);
-	print "OK"
+	# print "OK"
 	rez = polonaise_me(line);
-	print "rez : " + rez
+	# print "rez : " + rez
 	return (rez);
+
 
 
 
@@ -121,12 +150,13 @@ for line in data:
 	line = line.translate(None, string.whitespace)
 	line = re.sub(r"#.*", "", line)
 
-	print '[' + line + ']'
+	# print '[' + line + ']'
 	if (len(line) == 0):
 		continue
 	i = line.find("<=>")
 	if (i != -1):
 		obj = Rule(Rule.EQU, get_polonaise(line[:i]), get_polonaise(line[i+3:]))
+		rules.append(obj);
 	elif (line.find("=>") != -1):
 		i = line.find("=>")
 		obj = Rule(Rule.IMPL, get_polonaise(line[:i]), get_polonaise(line[i+2:]))
@@ -134,3 +164,6 @@ for line in data:
 	else:
 		print "Parse error : no second member on a rule"
 		sys.exit(1);
+
+for obj in rules:
+	print obj;
