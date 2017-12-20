@@ -1,4 +1,3 @@
-A | (B | C) + (D + (E | F)) | G + (H + (I | (J | K)))
-#caca
+A | (B | C) + (D + (E | F)) | G + (H + (I | (J | K))) <=> A
+A | (B | C) + (D + (E | F)) | G + (H + (I | (J | K))) => B
 
-		#queu

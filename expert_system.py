@@ -6,6 +6,8 @@ import re
 from parse_error import ParseException
 from is_x import *
 
+from rule import *
+
 def check_parenthesis_error(line):
 	i = 0
 	for c in line:
@@ -47,6 +49,8 @@ def check_for_error(line):
 			if (i != len(line) - 1):
 				if (not (is_fact(line[i + 1]) or line[i + 1] == '(')):
 					raise ParseException("operand error 2 for !")
+		elif (c != '(' and c != ')'):
+			raise ParseException("unknown symbol : " + c);
 
 def go_to_last_par(line):
 	i = 1
@@ -61,7 +65,7 @@ def go_to_last_par(line):
 
 
 def polonaise_me(line):
-	print ("calling polonaise_me with line : " + line);
+	# print ("calling polonaise_me with line : " + line);
 
 	rez = ""
 	last_operand = "";
@@ -69,13 +73,13 @@ def polonaise_me(line):
 		raise ParseException("WTF")
 	while (True):
 		if (len(line) == 0 or line[0] == ')'):
-			print "returning : " + rez + last_operand
+			# print "returning : " + rez + last_operand
 			return (rez + last_operand);
 		elif (line[0] == '('):
 			rez += polonaise_me(line[1:])
-			print "line before : " + line
+			# print "line before : " + line
 			line = go_to_last_par(line[1:])
-			print "line after : " + line
+			# print "line after : " + line
 		elif (is_fact(line[0])):
 			rez = rez + line[0];
 		elif (line[0] == '+'):	# Prioritaire
@@ -85,17 +89,20 @@ def polonaise_me(line):
 			last_operand = line[0];
 		line = line[1:];
 
+def get_polonaise(line):
+	if (len(line) == 0):
+		print "Parse error"
+		sys.exit(1);
+	try:
+	 	check_for_error(line)
+	except ParseException as e:
+		print "Parse error: " + e.strerror
+		sys.exit(1);
+	print "OK"
+	rez = polonaise_me(line);
+	print "rez : " + rez
+	return (rez);
 
-
-
-# 1 + 1 * 2
-#
-# # 1 + (2 + 9) * (2 * (1 + 1)) + 3 * (4 * ( 5 + (5 + 0))
-# 1 + (2 + 9) * (2 * (1 + 1)) * (3 + 1) + 3 * (4 * ( 5 + (5 + 0))
-# 1rezrez2rez3**+
-# ###			 	MAIN		#####
-#
-# A | (B | C) + (D + (E | F)) + (G | H) | I + (J + (K | (L | M))
 
 
 if (len(sys.argv) != 2):
@@ -108,17 +115,22 @@ except IOError as e:
 	sys.exit(1)
 data = f.readlines()
 
+rules = [];
+
 for line in data:
 	line = line.translate(None, string.whitespace)
 	line = re.sub(r"#.*", "", line)
 
 	print '[' + line + ']'
-	if (len(line) == 0 or line[0] == '#'):
+	if (len(line) == 0):
 		continue
-	try:
-	 	check_for_error(line)
-	except ParseException as e:
-		print "Error: " + e.strerror
-		continue
-	print "OK"
-	rez = polonaise_me(line);
+	i = line.find("<=>")
+	if (i != -1):
+		obj = Rule(Rule.EQU, get_polonaise(line[:i]), get_polonaise(line[i+3:]))
+	elif (line.find("=>") != -1):
+		i = line.find("=>")
+		obj = Rule(Rule.IMPL, get_polonaise(line[:i]), get_polonaise(line[i+2:]))
+		rules.append(obj);
+	else:
+		print "Parse error : no second member on a rule"
+		sys.exit(1);
