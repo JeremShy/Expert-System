@@ -4,4 +4,4 @@ def get_str(val):
 	if (val == 1):
 		return ("True")
 	if (val == -1):
-		return ("Indetermine")
+		return ("False")

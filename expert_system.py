@@ -4,6 +4,7 @@ import string
 import re
 
 from parse_error import ParseException
+from logic_error import LogicError
 from is_x import *
 from rule import *
 from parse import *
@@ -71,12 +72,26 @@ for obj in rules:
 	print obj;
 
 print "Queries : " + toSearch
-print "Val : " + get_str(is_true(rules[0].left))
 
+changes = True;
 
- # A ^ B | C + D => A
- # ABC+D^|
- # ABCD+|^
-# A | B | C + D + E | F | G + H + I | J | K
-# AB|CD+E+|F|GH+I+|J|K|
-# AB|CD+EF|+|GH+IJ|+|K|
+while (changes == True):
+	changes = False
+	for r in rules:
+		print "\nAnalyse de " + r.left
+		if (is_true(r.left) == 1):
+			print r.left + " est vrai"
+			try:
+				if (changes == False):
+					changes = exec_as_true(r.right)
+				else:
+					exec_as_true(r.right)
+			except LogicError as e:
+				print ("Logic error !")
+				sys.exit(1)
+			except ParseException as e:
+				print ("ParseError : " + e.strerror)
+				sys.exit(1)
+
+for i in toSearch:
+	print (i + " : " + get_str(dico[i]))
