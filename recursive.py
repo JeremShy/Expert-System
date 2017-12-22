@@ -17,7 +17,7 @@ def recursive(rules, dico):
 			dico_list = []
 			for pos in possibilities:
 				dico_list.append(recursive(rules, add_dico(dico, pos)))
-			dico = merge_list(dico_list)
+# dico = merge_list(dico_list) # dissension
 
 
 def solver(rules):
