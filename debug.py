@@ -1,7 +1,9 @@
+from globalx import *
+
 def get_str(val):
-	if (val == 0):
+	if (val == F or val == FI):
 		return ("False")
-	if (val == 1):
+	if (val == V or val == VI):
 		return ("True")
-	if (val == -1):
+	if (val == INDEF):
 		return ("Undetermined")

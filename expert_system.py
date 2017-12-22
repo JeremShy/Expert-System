@@ -72,71 +72,75 @@ if (initial_facts == False):
 
 for obj in rules:
 	print obj;
-while (True):
-	print "Queries : " + toSearch
-	print "Initial facts : " + facts
 
-	changes = True;
-
-	while (changes == True):
-		changes = False
-		for r in rules:
-			print "\nAnalyse de " + r.left
-			if (is_true(r.left) == 1):
-				print r.left + " est vrai"
-				try:
-					if (changes == False):
-						changes = exec_as_true(r.right)
-					else:
-						exec_as_true(r.right)
-				except LogicError as e:
-					print ("Logic error !")
-					sys.exit(1)
-				except ParseException as e:
-					print ("ParseError : " + e.strerror)
-					sys.exit(1)
-
-	for i in toSearch:
-		print (i + " : " + get_str(dico[i]))
-
-	try:
-		restart = raw_input("Restart ? (Y/n) : ")
-	except:
-		print "\nGood bye..."
-		sys.exit(0)
-
-	if (restart != "n" and restart != "N"):
-		dico =  { x:0 for x in dico}
-		try:
-			restart = raw_input("New initial facts ? (default : don't change) =")
-		except:
-			print "\nGood bye..."
-			sys.exit(0)
-		if (restart != ""):
-			facts = restart
-		else:
-			restart = facts
-		for c in restart:
-			if (not is_fact(c)):
-				print "Error while defining initial facts"
-				sys.exit(1);
-			dico[c] = 1;
-
-		try:
-			restart = raw_input("New queries ? (default : don't change) ?")
-		except:
-			print "\nGood bye..."
-			sys.exit(0)
-		if (restart != ""):
-			toSearch = restart;
-		else:
-			restart = toSearch
-		for c in restart:
-			if (not is_fact(c)):
-				print "Error while parsing queries"
-				sys.exit(1);
+find_all_possibilities("AB|")
 
 
-	else:
-		print "\nGood bye..."
-		sys.exit(0)
+# while (True):
+# 	print "Queries : " + toSearch
+# 	print "Initial facts : " + facts
+#
+# 	changes = True;
+#
+# 	while (changes == True):
+# 		changes = False
+# 		for r in rules:
+# 			print "\nAnalyse de " + r.left
+# 			if (is_true(r.left) == 1):
+# 				print r.left + " est vrai"
+# 				try:
+# 					if (changes == False):
+# 						changes = exec_as_true(r.right)
+# 					else:
+# 						exec_as_true(r.right)
+# 				except LogicError as e:
+# 					print ("Logic error !")
+# 					sys.exit(1)
+# 				except ParseException as e:
+# 					print ("ParseError : " + e.strerror)
+# 					sys.exit(1)
+#
+# 	for i in toSearch:
+# 		print (i + " : " + get_str(dico[i]))
+#
+# 	try:
+# 		restart = raw_input("Restart ? (Y/n) : ")
+# 	except:
+# 		print "\nGood bye..."
+# 		sys.exit(0)
+#
+# 	if (restart != "n" and restart != "N"):
+# 		dico =  { x:0 for x in dico}
+# 		try:
+# 			restart = raw_input("New initial facts ? (default : don't change) =")
+# 		except:
+# 			print "\nGood bye..."
+# 			sys.exit(0)
+# 		if (restart != ""):
+# 			facts = restart
+# 		else:
+# 			restart = facts
+# 		for c in restart:
+# 			if (not is_fact(c)):
+# 				print "Error while defining initial facts"
+# 				sys.exit(1);
+# 			dico[c] = 1;
+#
+# 		try:
+# 			restart = raw_input("New queries ? (default : don't change) ?")
+# 		except:
+# 			print "\nGood bye..."
+# 			sys.exit(0)
+# 		if (restart != ""):
+# 			toSearch = restart;
+# 		else:
+# 			restart = toSearch
+# 		for c in restart:
+# 			if (not is_fact(c)):
+# 				print "Error while parsing queries"
+# 				sys.exit(1);
+#
+#
+# 	else:
+# 		print "\nGood bye..."
+# 		sys.exit(0)

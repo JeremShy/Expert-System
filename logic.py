@@ -9,38 +9,38 @@ def exec_operand(stack, operand):
 	if (operand == '+'):
 		if (val1 == INDEF or val2 == INDEF):
 			stack.append(INDEF)
-		elif (val1 == FAUX_I or val2 == FAUX_I)
-			stack.append(FAUX_I)
-		elif (val1 == FAUX or val2 == FAUX)
-			stack.append(FAUX)
-		elif (val1 == VRAI_I or val2 == VRAI_I)
-			stack.append(VRAI_I)
-		else
-			stack.append(VRAI)
+		elif (val1 == FI or val2 == FI):
+			stack.append(FI)
+		elif (val1 == F or val2 == F):
+			stack.append(F)
+		elif (val1 == VI or val2 == VI):
+			stack.append(VI)
+		else:
+			stack.append(V)
 	elif (operand == '|'):
-		if (val1 == VRAI or val2 == VRAI):
-			stack.append(VRAI)
-		elif (val1 == VRAI_I or val2 == VRAI_I):
-			stack.append(VRAI_I)
+		if (val1 == V or val2 == V):
+			stack.append(V)
+		elif (val1 == VI or val2 == VI):
+			stack.append(VI)
 		elif (val1 == INDEF or val2 == INDEF):
 			stack.append(INDEF)
-		elif (val1 == FAUX_I or val2 == FAUX_I):
-			stack.append(FAUX_I)
-		else
-			stack.append(FAUX)
+		elif (val1 == FI or val2 == FI):
+			stack.append(FI)
+		else:
+			stack.append(F)
 	elif (operand == '^'):
 		if (val1 == INDEF or val2 == INDEF):
 			stack.append(INDEF)
-		elif ((val1 == VRAI or val1 == FAUX) and (val2 == VRAI or val2 == FAUX)):
+		elif ((val1 == V or val1 == F) and (val2 == V or val2 == F)):
 			if (val1 == val2):
-				stack.append(FAUX)
-			else
-				stack.append(VRAI)
+				stack.append(F)
+			else:
+				stack.append(V)
 		else:
 			if (val1 == val2):
-				stack.append(FAUX_I)
-			else
-				stack.append(VRAI_I)
+				stack.append(FI)
+			else:
+				stack.append(VI)
 
 
 def is_true(expression):
@@ -52,17 +52,17 @@ def is_true(expression):
 			stack.append(dico[expression[0]])
 		elif (is_b_operand(expression[0])):
 			exec_operand(stack, expression[0])
-			print stack
+			# print stack
 		elif (expression[0] == '!'):
 			value = stack.pop()
-			if (value == VRAI):
-				value = FAUX
-			elif (value == FAUX):
-				value = VRAI
-			elif (value == FAUX_I):
-				value = VRAI_I
-			elif (value == VRAI_I):
-				value = FAUX_I
+			if (value == V):
+				value = F
+			elif (value == F):
+				value = V
+			elif (value == FI):
+				value = VI
+			elif (value == VI):
+				value = FI
 			stack.append(value)
 		expression = expression[1:]
 
@@ -70,12 +70,31 @@ def is_true_with_dico(expression, other):
 	global dico
 	save = dico
 	dico = other
-	is_true(expression)
+	val = is_true(expression)
 	dico = save
+	return val
 
 def exec_as_true(expression):
 	global dico
 
-
 def find_all_possibilities(expression):
 	dico_list = []
+	dico_init = {}
+	for c in expression:
+		if (is_fact(c)):
+			dico_init[c] = dico[c]
+	for c in dico_init:
+		if (c == VI):
+			c = FI
+	while (True):
+		if (is_true_with_dico(expression, dico_init)):
+			dico_list.append(dico_init.copy())
+			print dico_init
+		for key, c in dico_init.items():
+			if (dico_init[key] == FI):
+				dico_init[key] = VI
+				break
+			elif (key == dico_init.keys()[-1] and dico_init[key] == VI):
+					return (dico_list)
+			else:
+				dico_init[key] = FI
