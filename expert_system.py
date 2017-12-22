@@ -11,6 +11,7 @@ from parse import *
 from logic import *
 from globalx import *
 from debug import *
+from recursive import *
 
 global dico
 
@@ -39,11 +40,20 @@ for line in data:
 		continue
 	i = line.find("<=>")
 	if (i != -1):
-		obj = Rule(Rule.EQU, get_polonaise(line[:i]), get_polonaise(line[i+3:]))
+		obj = Rule(Rule.IMPL, get_polonaise(line[:i]), get_polonaise(line[i+3:]))
+		rules.append(obj);
+		obj = Rule(Rule.IMPL, get_polonaise(line[i+3:]) + "!", get_polonaise(line[:i]) + "!")
+		rules.append(obj);
+
+		obj = Rule(Rule.IMPL, get_polonaise(line[i+3:]), get_polonaise(line[:i]))
+		rules.append(obj);
+		obj = Rule(Rule.IMPL, get_polonaise(line[:i]) + "!", get_polonaise(line[i+3:]) + "!")
 		rules.append(obj);
 	elif (line.find("=>") != -1):
 		i = line.find("=>")
 		obj = Rule(Rule.IMPL, get_polonaise(line[:i]), get_polonaise(line[i+2:]))
+		rules.append(obj);
+		obj = Rule(Rule.IMPL, get_polonaise(line[i+2:]) + "!", get_polonaise(line[:i]) + "!")
 		rules.append(obj);
 	elif (line[0] == "="):
 		initial_facts = True;
@@ -73,32 +83,34 @@ if (initial_facts == False):
 for obj in rules:
 	print obj;
 
+
 find_all_possibilities("AB|")
 
+rez = recursive()
 
 # while (True):
 # 	print "Queries : " + toSearch
 # 	print "Initial facts : " + facts
 #
-# 	changes = True;
+# 	changes = True;/
 #
-# 	while (changes == True):
-# 		changes = False
-# 		for r in rules:
-# 			print "\nAnalyse de " + r.left
-# 			if (is_true(r.left) == 1):
-# 				print r.left + " est vrai"
-# 				try:
-# 					if (changes == False):
-# 						changes = exec_as_true(r.right)
-# 					else:
-# 						exec_as_true(r.right)
-# 				except LogicError as e:
-# 					print ("Logic error !")
-# 					sys.exit(1)
-# 				except ParseException as e:
-# 					print ("ParseError : " + e.strerror)
-# 					sys.exit(1)
+	# while (changes == True):
+	# 	changes = False
+	# 	for r in rules:
+	# 		print "\nAnalyse de " + r.left
+	# 		if (is_true(r.left) == 1):
+	# 			print r.left + " est vrai"
+	# 			try:
+	# 				if (changes == False):
+	# 					changes = exec_as_true(r.right)
+	# 				else:
+	# 					exec_as_true(r.right)
+	# 			except LogicError as e:
+	# 				print ("Logic error !")
+	# 				sys.exit(1)
+	# 			except ParseException as e:
+	# 				print ("ParseError : " + e.strerror)
+	# 				sys.exit(1)
 #
 # 	for i in toSearch:
 # 		print (i + " : " + get_str(dico[i]))
