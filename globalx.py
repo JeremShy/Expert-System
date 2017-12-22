@@ -1,28 +1,36 @@
+VRAI = 1
+FAUX = 0
+VRAI_I = -1
+FAUX_I = -2
+INDEF = -3
+
+
+
 dico = {
-				'A' : 0,
-				'B' : 0,
-				'C' : 0,
-				'D' : 0,
-				'E' : 0,
-				'F' : 0,
-				'G' : 0,
-				'H' : 0,
-				'I' : 0,
-				'J' : 0,
-				'K' : 0,
-				'L' : 0,
-				'M' : 0,
-				'N' : 0,
-				'O' : 0,
-				'P' : 0,
-				'Q' : 0,
-				'R' : 0,
-				'S' : 0,
-				'T' : 0,
-				'U' : 0,
-				'V' : 0,
-				'W' : 0,
-				'X' : 0,
-				'Y' : 0,
-				'Z' : 0
+				'A' : FAUX_I,
+				'B' : FAUX_I,
+				'C' : FAUX_I,
+				'D' : FAUX_I,
+				'E' : FAUX_I,
+				'F' : FAUX_I,
+				'G' : FAUX_I,
+				'H' : FAUX_I,
+				'I' : FAUX_I,
+				'J' : FAUX_I,
+				'K' : FAUX_I,
+				'L' : FAUX_I,
+				'M' : FAUX_I,
+				'N' : FAUX_I,
+				'O' : FAUX_I,
+				'P' : FAUX_I,
+				'Q' : FAUX_I,
+				'R' : FAUX_I,
+				'S' : FAUX_I,
+				'T' : FAUX_I,
+				'U' : FAUX_I,
+				'V' : FAUX_I,
+				'W' : FAUX_I,
+				'X' : FAUX_I,
+				'Y' : FAUX_I,
+				'Z' : FAUX_I
 			}

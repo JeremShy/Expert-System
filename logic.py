@@ -7,35 +7,40 @@ def exec_operand(stack, operand):
 	val1 = stack.pop()
 	val2 = stack.pop()
 	if (operand == '+'):
-		if (val1 == -2 or val2 == -2);
-			stack.append(-2)
-		elif (val1 == -1 or val2 == -1)
-			stack.append(-1)
-		elif (val1 == 1 and val2 == 1):
-			stack.append(1)
+		if (val1 == INDEF or val2 == INDEF):
+			stack.append(INDEF)
+		elif (val1 == FAUX_I or val2 == FAUX_I)
+			stack.append(FAUX_I)
+		elif (val1 == FAUX or val2 == FAUX)
+			stack.append(FAUX)
+		elif (val1 == VRAI_I or val2 == VRAI_I)
+			stack.append(VRAI_I)
 		else
-			stack.append(0)
-
+			stack.append(VRAI)
 	elif (operand == '|'):
-		if (val1 == 1 or val2 == 1)
-			stack.append(1)
-		elif (val1 == -2 or val2 == -2);
-			stack.append(-2)
-		elif (val1 == -1 or val2 == -1)
-			stack.append(-1)
+		if (val1 == VRAI or val2 == VRAI):
+			stack.append(VRAI)
+		elif (val1 == VRAI_I or val2 == VRAI_I):
+			stack.append(VRAI_I)
+		elif (val1 == INDEF or val2 == INDEF):
+			stack.append(INDEF)
+		elif (val1 == FAUX_I or val2 == FAUX_I):
+			stack.append(FAUX_I)
 		else
-			stack.append(0)
+			stack.append(FAUX)
 	elif (operand == '^'):
-		if (val1 == -2 or val2 == -2);
-			stack.append(-2)
-		elif (val1 == 1 and val2 == 1)
-			stack.append(0)
-		elif (val1 == 1 or val2 == 1)
-			stack.append(1)
-
-=B
-B ^ C => C
-
+		if (val1 == INDEF or val2 == INDEF):
+			stack.append(INDEF)
+		elif ((val1 == VRAI or val1 == FAUX) and (val2 == VRAI or val2 == FAUX)):
+			if (val1 == val2):
+				stack.append(FAUX)
+			else
+				stack.append(VRAI)
+		else:
+			if (val1 == val2):
+				stack.append(FAUX_I)
+			else
+				stack.append(VRAI_I)
 
 
 def is_true(expression):
@@ -50,27 +55,15 @@ def is_true(expression):
 			print stack
 		elif (expression[0] == '!'):
 			value = stack.pop()
-			if (value == 1):
-				value = 0
-			elif (value == 0):
-				value = 1
-			else:
-				value = 1
+			if (value == VRAI):
+				value = FAUX
+			elif (value == FAUX):
+				value = VRAI
+			elif (value == FAUX_I):
+				value = VRAI_I
+			elif (value == VRAI_I):
+				value = FAUX_I
 			stack.append(value)
-		expression = expression[1:]
-
-def exec_as_true(expression):
-	global dico
-	changes = False
-	while (True):
-		if (len(expression) == 0):
-			return (changes)
-		if (is_fact(expression[0])):
-			factval = dico[expression[0]];
-			if (dico[expression[0]] != 1):
-				changes = True
-				print expression[0] + " devient vrai"
-			dico[expression[0]] = 1
 		expression = expression[1:]
 
 def is_true_with_dico(expression, other):
@@ -79,6 +72,10 @@ def is_true_with_dico(expression, other):
 	dico = other
 	is_true(expression)
 	dico = save
+
+def exec_as_true(expression):
+	global dico
+
 
 def find_all_possibilities(expression):
 	dico_list = []
