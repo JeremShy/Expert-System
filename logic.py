@@ -74,28 +74,25 @@ def is_true_with_dico(expression, other):
 	dico = save
 	return val
 
-def exec_as_true(expression):
-	global dico
+def rules_true_with_dico(rules, dico):
+	for r in rules:
+		if (is_true_with_dico(r.left, dico)):
+			if (not is_true_with_dico(r.right, dico)):
+				return (False)
+	return True;
 
-def find_all_possibilities(expression):
+def solver(rules):
 	print "calling find all"
 	dico_list = []
-	dico_init = {}
-	for c in expression:
-		if (is_fact(c)):
-			dico_init[c] = dico[c]
-	for c in dico_init:
-		if (c == VI):
-			c = FI
+	dicopy = dico.copy();
 	while (True):
-		tmp = is_true_with_dico(expression, dico_init);
-		if (tmp == VI or tmp == V):
-			dico_list.append(dico_init.copy())
-		for key, c in dico_init.items():
-			if (dico_init[key] == FI):
-				dico_init[key] = VI
+		if (rules_true_with_dico(rules, dicopy)):
+			dico_list.append(dicopy.copy())
+		for key, c in dicopy.items():
+			if (dicopy[key] == F):
+				dicopy[key] = V
 				break
-			elif (key == dico_init.keys()[-1] and dico_init[key] == VI):
+			elif (key == dicopy.keys()[-1] and dicopy[key] == V):
 					return (dico_list)
-			else:
-				dico_init[key] = FI
+			elif (dico[key] != V):
+				dicopy[key] = F
