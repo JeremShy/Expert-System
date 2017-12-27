@@ -8,15 +8,24 @@ def add_dico(dico, prio):
 	return (dico)
 
 def merge_list(dico_list):
-
+	pass
 
 def recursive(rules, dico):
-	for r in rules:
-		if (is_true(r.left)):
-			possibilities = find_all_possibilities(r.right)
-			dico_list = []
-			for pos in possibilities:
-				dico_list.append(recursive(rules, add_dico(dico, pos)))
+	modif = True
+	while (modif == True):
+		modif == False
+		for r in rules:
+			tmp = is_true(r.left)
+			if (tmp == VI or tmp == V):
+				possibilities = find_all_possibilities(r.right)
+				print possibilities,
+				print " " + r.__str__()
+				dico_list = []
+				for pos in possibilities:
+					dico_list.append(recursive(rules, add_dico(dico, pos)))
+
+
+
 # dico = merge_list(dico_list) # dissension
 
 

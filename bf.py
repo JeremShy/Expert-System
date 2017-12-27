@@ -77,16 +77,13 @@ def is_true_with_dico(expression, other):
 def exec_as_true(expression):
 	global dico
 
-def find_all_possibilities(expression):
-	print "calling find all"
+def solver(expression):
 	dico_list = []
-	dico_init = {}
-	for c in expression:
-		if (is_fact(c)):
-			dico_init[c] = dico[c]
+	dico_init = dico.copy()
 	for c in dico_init:
-		if (c == VI):
-			c = FI
+		if (c == V or c == VI):
+			c = V
+		if
 	while (True):
 		tmp = is_true_with_dico(expression, dico_init);
 		if (tmp == VI or tmp == V):

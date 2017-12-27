@@ -1,19 +1,30 @@
-
 							    -  | B = 1 ; C = 0 ; D = 1
 			 				  /
-A  => B | C	- - - - - -  | --- | B = 1 ; C = 1 ; D = 0
+A  => B | C	- - | --- | B = 1 ; C = 1 ; D = 0
 							  \
 							    -  | B = 0 ; C = 1 ; D = 0
 
-
-					C = 0 ; D = 1 ; C | D => B ;
+																						B = 1 ; E = 1
+					C = 0 ; D = 1 ; D => B | E ; ---  B = 1 ; E = 0
+																						B = 0 ; E = 1
 A => C ^ D ---
-					C = 1 ; D = 0 ; C | D => B ;
+					C = 1 ; D = 0 ; D => B | E ;
+
 
 
 
 A => (B | C) & D
 A => (B | C) & !D
 
-A & D => B | E 
+A & D => B | E
 A => D
+
+
+Quand y a plus d'une solution (find all possibilities) -> On cree un monde
+Quand un monde ne marche plus -> Plus de solution
+Vrai -> Faux impossible et inversement
+
+
+
+A => C ^ D
+D => B | E

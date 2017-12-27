@@ -84,9 +84,8 @@ for obj in rules:
 	print obj;
 
 
-find_all_possibilities("AB|")
 
-rez = recursive()
+rez = solver(rules)
 
 # while (True):
 # 	print "Queries : " + toSearch
