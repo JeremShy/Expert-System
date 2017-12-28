@@ -76,8 +76,8 @@ def is_true_with_dico(expression, other):
 
 def rules_true_with_dico(rules, dico):
 	for r in rules:
-		if (is_true_with_dico(r.left, dico)):
-			if (not is_true_with_dico(r.right, dico)):
+		if (is_true_with_dico(r.left, dico) == V):
+			if (is_true_with_dico(r.right, dico) != V):
 				return (False)
 	return True;
 
@@ -103,8 +103,12 @@ def print_solutions(toSearch, dico_list):
 
 
 def solver(rules, toSearch):
+	global dico
 	print "calling solver"
 	dico_list = []
+	for k,v in dico.items():
+		if (v == FI):
+			dico[k] = F
 	dicopy = dico.copy();
 	tmp = dico.copy();
 	for i in tmp:
@@ -117,12 +121,9 @@ def solver(rules, toSearch):
 			if (is_fact(c)):
 				tmp[c] = 1
 	dicopy = dict(filter(lambda ((k,v)): tmp[k] == 1, dicopy.items()))
-	print dicopy
-
 	while (True):
 		if (rules_true_with_dico(rules, dicopy)):
 			dico_list.append(dicopy.copy())
-			# print dicopy
 		for key, c in dicopy.items():
 			if (dicopy[key] == F):
 				dicopy[key] = V
@@ -133,26 +134,6 @@ def solver(rules, toSearch):
 			elif (dico[key] != V):
 				dicopy[key] = F
 
-# def solver(expression):
-# 	dico_list = []
-# 	dico_init = dico.copy()
-# 	for c in dico_init:
-# 		if (c == V or c == VI):
-# 			c = V
-# 		if
-# 	while (True):
-# 		tmp = is_true_with_dico(expression, dico_init);
-# 		if (tmp == VI or tmp == V):
-# 			dico_list.append(dico_init.copy())
-# 		for key, c in dico_init.items():
-# 			if (dico_init[key] == FI):
-# 				dico_init[key] = VI
-# 				break
-# 			elif (key == dico_init.keys()[-1] and dico_init[key] == VI):
-# 					return (dico_list)
-# 			else:
-# 				dico_init[key] = FI
-#
 def exec_as_true(expression):
 	global dico
 	changes = False
