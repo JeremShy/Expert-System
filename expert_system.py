@@ -11,7 +11,6 @@ from parse import *
 from logic import *
 from globalx import *
 from debug import *
-from recursive import *
 
 global dico
 
@@ -76,16 +75,10 @@ if (initial_facts == False):
 		print "Error: No initial facts or = followed by a newline"
 		sys.exit(1);
 
-for obj in rules:
-	print obj;
-
-
-dicopy = dico.copy();
-
-
 # rez = solver(rules, toSearch)
 
 while (True):
+	dicopy = dico.copy();
 	print "Queries : " + toSearch
 	print "Initial facts : " + facts
 
@@ -95,11 +88,8 @@ while (True):
 		changes = False
 		bidule = False
 		for r in rules:
-			print "\nAnalyse de " + r.left
 			tmp = is_true_with_dico(r.left, dico)
 			if (tmp == V or tmp == VI):
-				print r.left + " est vrai"
-				print "tmp : " + str(tmp)
 				try:
 					if ('!' in r.right or '|' in r.right or '^' in r.right):
 						dico = dicopy
@@ -141,7 +131,6 @@ while (True):
 				print "Error while defining initial facts"
 				sys.exit(1);
 			dico[c] = 1;
-		print dico
 
 		try:
 			restart = raw_input("New queries ? (default : don't change) ?")

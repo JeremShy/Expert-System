@@ -146,7 +146,6 @@ def exec_as_true(expression):
 				raise LogicError("Error")
 			if (dico[expression[0]] != 1):
 				changes = True
-				print expression[0] + " devient vrai"
 			dico[expression[0]] = 1
 		elif (expression[0] != '+' and expression[0] != '(' and expression[0] != ')'):
 			raise ParseError("Invalid conclusion")
