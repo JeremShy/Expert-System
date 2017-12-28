@@ -81,18 +81,92 @@ def rules_true_with_dico(rules, dico):
 				return (False)
 	return True;
 
-def solver(rules):
-	print "calling find all"
+def print_solutions(toSearch, dico_list):
+	print (dico_list)
+	rez = dict()
+	if (len(dico_list) == 0):
+		print ("Logic Error !")
+		return
+	for c in toSearch:
+		rez[c] = -5
+		for d in dico_list:
+			if (d[c] != dico_list[0][c]):
+				dico_list[0][c] = -1
+
+	for c in toSearch:
+		if (dico_list[0][c] == 1):
+			print (str(c) + " : True")
+		elif (dico_list[0][c] == 2):
+			print (str(c) + " : False")
+		else:
+			print (str(c) + " : Indef")
+
+
+def solver(rules, toSearch):
+	print "calling solver"
 	dico_list = []
 	dicopy = dico.copy();
+	tmp = dico.copy();
+	for i in tmp:
+		i = 0
+	for r in rules:
+		for c in r.left:
+			if (is_fact(c)):
+				tmp[c] = 1
+		for c in r.right:
+			if (is_fact(c)):
+				tmp[c] = 1
+	dicopy = dict(filter(lambda ((k,v)): tmp[k] == 1, dicopy.items()))
+	print dicopy
+
 	while (True):
 		if (rules_true_with_dico(rules, dicopy)):
 			dico_list.append(dicopy.copy())
+			# print dicopy
 		for key, c in dicopy.items():
 			if (dicopy[key] == F):
 				dicopy[key] = V
 				break
 			elif (key == dicopy.keys()[-1] and dicopy[key] == V):
+					print_solutions(toSearch, dico_list)
 					return (dico_list)
 			elif (dico[key] != V):
 				dicopy[key] = F
+
+# def solver(expression):
+# 	dico_list = []
+# 	dico_init = dico.copy()
+# 	for c in dico_init:
+# 		if (c == V or c == VI):
+# 			c = V
+# 		if
+# 	while (True):
+# 		tmp = is_true_with_dico(expression, dico_init);
+# 		if (tmp == VI or tmp == V):
+# 			dico_list.append(dico_init.copy())
+# 		for key, c in dico_init.items():
+# 			if (dico_init[key] == FI):
+# 				dico_init[key] = VI
+# 				break
+# 			elif (key == dico_init.keys()[-1] and dico_init[key] == VI):
+# 					return (dico_list)
+# 			else:
+# 				dico_init[key] = FI
+#
+def exec_as_true(expression):
+	global dico
+	changes = False
+	while (True):
+		if (len(expression) == 0):
+			return (changes)
+		if (is_fact(expression[0])):
+			factval = dico[expression[0]];
+			if (factval == 0):
+				raise LogicError("Error")
+			if (dico[expression[0]] != 1):
+				changes = True
+				print expression[0] + " devient vrai"
+			dico[expression[0]] = 1
+		elif (expression[0] != '+' and expression[0] != '(' and expression[0] != ')'):
+			raise ParseError("Invalid conclusion")
+		expression = expression[1:]

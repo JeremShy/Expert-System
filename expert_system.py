@@ -85,31 +85,31 @@ for obj in rules:
 
 
 
-rez = solver(rules)
-
+rez = solver(rules, toSearch)
+#
 # while (True):
 # 	print "Queries : " + toSearch
 # 	print "Initial facts : " + facts
 #
-# 	changes = True;/
+# 	changes = True;
 #
-	# while (changes == True):
-	# 	changes = False
-	# 	for r in rules:
-	# 		print "\nAnalyse de " + r.left
-	# 		if (is_true(r.left) == 1):
-	# 			print r.left + " est vrai"
-	# 			try:
-	# 				if (changes == False):
-	# 					changes = exec_as_true(r.right)
-	# 				else:
-	# 					exec_as_true(r.right)
-	# 			except LogicError as e:
-	# 				print ("Logic error !")
-	# 				sys.exit(1)
-	# 			except ParseException as e:
-	# 				print ("ParseError : " + e.strerror)
-	# 				sys.exit(1)
+# 	while (changes == True):
+# 		changes = False
+# 		for r in rules:
+# 			print "\nAnalyse de " + r.left
+# 			if (is_true(r.left) == 1):
+# 				print r.left + " est vrai"
+# 				try:
+# 					if (changes == False):
+# 						changes = exec_as_true(r.right)
+# 					else:
+# 						exec_as_true(r.right)
+# 				except LogicError as e:
+# 					print ("Logic error !")
+# 					sys.exit(1)
+# 				except ParseException as e:
+# 					print ("ParseError : " + e.strerror)
+# 					sys.exit(1)
 #
 # 	for i in toSearch:
 # 		print (i + " : " + get_str(dico[i]))
