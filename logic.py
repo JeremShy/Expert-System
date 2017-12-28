@@ -82,7 +82,6 @@ def rules_true_with_dico(rules, dico):
 	return True;
 
 def print_solutions(toSearch, dico_list):
-	print (dico_list)
 	rez = dict()
 	if (len(dico_list) == 0):
 		print ("Logic Error !")
@@ -104,7 +103,6 @@ def print_solutions(toSearch, dico_list):
 
 def solver(rules, toSearch):
 	global dico
-	print "calling solver"
 	dico_list = []
 	for k,v in dico.items():
 		if (v == FI):
@@ -134,8 +132,9 @@ def solver(rules, toSearch):
 			elif (dico[key] != V):
 				dicopy[key] = F
 
-def exec_as_true(expression):
+def exec_as_true(expression, other):
 	global dico
+	dico = other
 	changes = False
 	while (True):
 		if (len(expression) == 0):

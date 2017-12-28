@@ -12,6 +12,10 @@ from logic import *
 from globalx import *
 from debug import *
 
+def change_dico(other):
+	global dico
+	dico = other
+
 global dico
 
 if (len(sys.argv) != 2):
@@ -84,6 +88,7 @@ while (True):
 
 	changes = True;
 
+	change_dico(dico)
 	while (changes == True):
 		changes = False
 		bidule = False
@@ -98,9 +103,9 @@ while (True):
 						bidule = True
 						break
 					if (changes == False):
-						changes = exec_as_true(r.right)
+						changes = exec_as_true(r.right, dico)
 					else:
-						exec_as_true(r.right)
+						exec_as_true(r.right, dico)
 				except LogicError as e:
 					print ("Logic error !")
 					sys.exit(1)
@@ -119,7 +124,7 @@ while (True):
 		sys.exit(0)
 
 	if (restart != "n" and restart != "N"):
-		dico =  { x:-2 for x in dico}
+		dico = { x:-2 for x in dico}
 		try:
 			restart = raw_input("New initial facts ? =")
 		except:
@@ -131,7 +136,6 @@ while (True):
 				print "Error while defining initial facts"
 				sys.exit(1);
 			dico[c] = 1;
-
 		try:
 			restart = raw_input("New queries ? (default : don't change) ?")
 		except:
