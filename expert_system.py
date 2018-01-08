@@ -49,9 +49,18 @@ for line in data:
 		obj = Rule(Rule.IMPL, get_polonaise(line[i+3:]), get_polonaise(line[:i]))
 		rules.append(obj)
 
+		obj = Rule(Rule.IMPL, get_polonaise(line[i+3:]) + "!", get_polonaise(line[:i]) + "!")
+		rules.append(obj)
+
+		obj = Rule(Rule.IMPL, get_polonaise(line[:i]) + "!", get_polonaise(line[i+3:]) + "!")
+		rules.append(obj)
+
+
 	elif (line.find("=>") != -1):
 		i = line.find("=>")
 		obj = Rule(Rule.IMPL, get_polonaise(line[:i]), get_polonaise(line[i+2:]))
+		rules.append(obj)
+		obj = Rule(Rule.IMPL, get_polonaise(line[i+2:]) + "!", get_polonaise(line[:i]) + "!")
 		rules.append(obj)
 
 	elif (line[0] == "="):
