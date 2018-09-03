@@ -88,10 +88,9 @@ if (initial_facts == False):
 		print "Error: No initial facts or = followed by a newline"
 		sys.exit(1);
 
-# rez = solver(rules, toSearch)
-
 while (True):
 	dicopy = dico.copy();
+
 	print "Queries : " + toSearch
 	print "Initial facts : " + facts
 
@@ -105,12 +104,6 @@ while (True):
 			tmp = is_true_with_dico(r.left, dico)
 			if (tmp == V or tmp == VI):
 				try:
-					if ('!' in r.right or '|' in r.right or '^' in r.right):
-						dico = dicopy
-						solver(rules, toSearch)
-						changes = False
-						bidule = True
-						break
 					if (changes == False):
 						changes = exec_as_true(r.right, dico)
 					else:
