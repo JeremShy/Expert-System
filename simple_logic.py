@@ -35,7 +35,7 @@ def exec_operand(stack, operand):
 			else:
 				stack.append(V)
 		else:
-			if (val1 == val2):
+			if (val1 == val2 or (val1 == FI and val2 == F) or (val1 == F and val2 == FI) or (val1 == VI and val2 == V) or (val1 == V and val2 == VI)):
 				stack.append(FI)
 			else:
 				stack.append(VI)
@@ -60,5 +60,7 @@ def is_true(expression, dico):
 				value = VI
 			elif (value == VI):
 				value = FI
+			elif (value == INDEF):
+				value = INDEF
 			stack.append(value)
 		expression = expression[1:]

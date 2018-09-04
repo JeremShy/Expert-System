@@ -38,7 +38,6 @@ for line in data:
 	line = line.translate(None, string.whitespace)
 	line = re.sub(r"#.*", "", line)
 
-	# print '[' + line + ']'
 	if (len(line) == 0):
 		continue
 	i = line.find("<=>")
@@ -97,7 +96,7 @@ while (True):
 	changes = True;
 
 	change_dico(dico)
-	while (changes == True):
+	while (changes):
 		changes = False
 		bidule = False
 		for r in rules:
@@ -105,9 +104,9 @@ while (True):
 			if (tmp == V or tmp == VI):
 				try:
 					if (changes == False):
-						changes = exec_as_true(r.right, dico)
+						changes = exec_as_true(r.right, dico, tmp == VI)
 					else:
-						exec_as_true(r.right, dico)
+						exec_as_true(r.right, dico, tmp == VI)
 				except LogicError as e:
 					print ("Logic error !")
 					sys.exit(1)
